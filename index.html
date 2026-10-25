@@ -1,0 +1,369 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Happy Birthday Zozo! 👑</title>
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background: linear-gradient(135deg, #ff9a9e 0%, #fecfef 50%, #feada6 100%);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            color: #333;
+            padding: 20px;
+        }
+
+        .card {
+            background: rgba(255, 255, 255, 0.92);
+            padding: 35px 25px;
+            border-radius: 25px;
+            box-shadow: 0 15px 35px rgba(214, 51, 132, 0.2);
+            max-width: 500px;
+            width: 100%;
+            position: relative;
+            backdrop-filter: blur(8px);
+        }
+
+        /* 1. Introductory Screen */
+        #intro-text {
+            font-size: 2rem;
+            color: #d63384;
+            font-weight: bold;
+            line-height: 1.4;
+            transition: opacity 1s ease, transform 1s ease;
+        }
+
+        #start-btn-box {
+            display: none;
+            opacity: 0;
+            transition: opacity 1s ease;
+        }
+
+        #start-btn-box.show {
+            display: block;
+            opacity: 1;
+            animation: popIn 0.8s ease forwards;
+        }
+
+        .btn {
+            background: linear-gradient(45deg, #ff4081, #ff80ab);
+            color: white;
+            border: none;
+            padding: 14px 30px;
+            font-size: 1.1rem;
+            font-weight: bold;
+            border-radius: 50px;
+            cursor: pointer;
+            box-shadow: 0 6px 18px rgba(255, 64, 129, 0.35);
+            transition: all 0.3s ease;
+            margin-top: 15px;
+        }
+
+        .btn:hover {
+            transform: translateY(-3px) scale(1.04);
+            box-shadow: 0 10px 22px rgba(255, 64, 129, 0.5);
+        }
+
+        .btn-option {
+            background: white;
+            color: #d63384;
+            border: 2px solid #ff80ab;
+            width: 100%;
+            padding: 12px;
+            margin: 8px 0;
+            border-radius: 15px;
+            font-size: 1.1rem;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .btn-option:hover {
+            background: #ff80ab;
+            color: white;
+        }
+
+        /* Hidden Sections */
+        .page {
+            display: none;
+        }
+
+        .page.active {
+            display: block;
+            animation: fadeIn 0.8s ease forwards;
+        }
+
+        h2 {
+            color: #d63384;
+            margin-bottom: 20px;
+            font-size: 1.5rem;
+        }
+
+        /* Video Container */
+        video {
+            width: 100%;
+            max-height: 350px;
+            border-radius: 15px;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.15);
+            margin-bottom: 15px;
+        }
+
+        /* Retro Cassette Player */
+        .cassette-player {
+            background: #2b2b2b;
+            border-radius: 20px;
+            padding: 20px;
+            box-shadow: inset 0 0 10px #000, 0 10px 25px rgba(0,0,0,0.3);
+            border: 4px solid #ff80ab;
+            margin: 20px 0;
+            color: white;
+        }
+
+        .cassette-reels {
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+            background: #111;
+            padding: 15px;
+            border-radius: 12px;
+            margin-bottom: 15px;
+        }
+
+        .reel {
+            width: 50px;
+            height: 50px;
+            border: 6px dashed #fff;
+            border-radius: 50%;
+            animation: spin 3s linear infinite;
+            animation-play-state: paused;
+        }
+
+        .spinning .reel {
+            animation-play-state: running;
+        }
+
+        .final-message {
+            font-size: 1.2rem;
+            color: #c2185b;
+            line-height: 1.6;
+            margin-top: 15px;
+            background: #fff0f5;
+            padding: 15px;
+            border-radius: 15px;
+            border: 2px stroke #ffb6c1;
+            font-weight: 600;
+        }
+
+        /* Modal Overlay */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0,0,0,0.6);
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+        }
+
+        .modal-content {
+            background: white;
+            padding: 25px;
+            border-radius: 20px;
+            text-align: center;
+            max-width: 320px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+            animation: popIn 0.4s ease;
+        }
+
+        .modal-content p {
+            font-size: 1.3rem;
+            color: #d63384;
+            font-weight: bold;
+            margin-bottom: 15px;
+        }
+
+        /* Animations */
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(15px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @keyframes popIn {
+            0% { transform: scale(0.6); opacity: 0; }
+            100% { transform: scale(1); opacity: 1; }
+        }
+
+        @keyframes spin {
+            100% { transform: rotate(360deg); }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="card">
+        <!-- 1. Intro Page -->
+        <div id="intro-page" class="page active">
+            <h1 id="intro-text">Let's celebrate the birthday of Queen Zozo 👑</h1>
+            <div id="start-btn-box">
+                <button class="btn" onclick="showPage('q1-page')">If you're ready, let's go! 🚀</button>
+            </div>
+        </div>
+
+        <!-- 2. Question 1 (Online Best Friend) -->
+        <div id="q1-page" class="page">
+            <h2>Who is your best online friend? </h2>
+            <button class="btn-option" onclick="answerQ1('bsmolty')">bsmolty</button>
+            <button class="btn-option" onclick="answerQ1('other')">Someone else</button>
+        </div>
+
+        <!-- 3. Question 2 (Love Level) -->
+        <div id="q2-page" class="page">
+            <h2>أنتي عارفة بسمولة بتحبك قد إيه؟ 🤔</h2>
+            <button class="btn-option" onclick="answerQ2('yes')">أه </button>
+            <button class="btn-option" onclick="answerQ2('no')">لا </button>
+        </div>
+
+        <!-- 4. Video Page -->
+        <div id="video-page" class="page">
+            <h2>شوفي الفيديو ده الأول! 👇</h2>
+            <!-- اسم فيديو الهدية: zozo_video.mp4 -->
+            <video id="my-video" controls onended="showEnoughQuestion()">
+                <source src="zozo_video.mp4" type="video/mp4">
+                المتصفح الخاص بكِ لا يدعم تشغيل الفيديو.
+            </video>
+            
+            <div id="enough-box" style="display: none; margin-top: 15px;">
+                <h2>كفاية؟ </h2>
+                <button class="btn-option" onclick="answerEnough('yes')">أه</button>
+                <button class="btn-option" onclick="answerEnough('no')">لا</button>
+            </div>
+        </div>
+
+        <!-- 5. Cassette Audio & Final Message Page -->
+        <div id="final-page" class="page">
+            <h2>الأغنية دي مني ليكي! 🎶</h2>
+            
+            <div class="cassette-player">
+                <div class="cassette-reels" id="reels-box">
+                    <div class="reel"></div>
+                    <div style="font-size: 1.8rem;">📼</div>
+                    <div class="reel"></div>
+                </div>
+                <!-- اسم التسجيل الصوتي: zozo_song.mp3 -->
+                <audio id="my-song" src="zozo_song.mp3"></audio>
+                <button class="btn" onclick="toggleAudio()">تشغيل / إيقاف 🎵</button>
+            </div>
+
+            <!-- الرسالة النهائية التي يمكنك تعديلها -->
+            <div class="final-message">
+              luvvv u bby كل عام وانت بخير يروحقلبي بحبك اوي اوي بجد وبتمنى دا يفضل ذكرى بينا وتفضلي فاكرة قد ايه انا بحبك ومحظوظة بيكي 
+            </div>
+        </div>
+    </div>
+
+    <!-- Popup Modal -->
+    <div id="custom-modal" class="modal">
+        <div class="modal-content">
+            <p id="modal-text"></p>
+            <button class="btn" onclick="closeModal()">OK</button>
+        </div>
+    </div>
+
+    <script>
+        // الاختفاء التلقائي للجملة وظهور الزرار بعد 3.5 ثوانٍ
+        setTimeout(() => {
+            const introText = document.getElementById('intro-text');
+            const startBtnBox = document.getElementById('start-btn-box');
+
+            introText.style.opacity = '0';
+            setTimeout(() => {
+                introText.style.display = 'none';
+                startBtnBox.classList.add('show');
+            }, 1000);
+        }, 3500);
+
+        // التنقل بين الصفحات
+        function showPage(pageId) {
+            document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+            document.getElementById(pageId).classList.add('show', 'active');
+        }
+
+        // إظهار الرسائل المنبثقة
+        function showAlert(text, callback = null) {
+            document.getElementById('modal-text').innerHTML = text;
+            document.getElementById('custom-modal').style.display = 'flex';
+            window.modalCallback = callback;
+        }
+
+        function closeModal() {
+            document.getElementById('custom-modal').style.display = 'none';
+            if (window.modalCallback) {
+                window.modalCallback();
+                window.modalCallback = null;
+            }
+        }
+
+        // إجابة السؤال الأول
+        function answerQ1(choice) {
+            if (choice === 'other') {
+                showAlert("طب مفيش احتفال 😡");
+            } else {
+                showAlert("أشطر كتكوتة ", () => {
+                    showPage('q2-page');
+                });
+            }
+        }
+
+        // إجابة السؤال الثاني
+        function answerQ2(choice) {
+            if (choice === 'yes') {
+                showAlert("لا طبعا متتخيليش قد إيه ");
+            } else {
+                showAlert("اضغطي هنا عشان تشوفي! ", () => {
+                    showPage('video-page');
+                });
+            }
+        }
+
+        // ظهور سؤال "كفاية؟" بعد انتهاء الفيديو
+        function showEnoughQuestion() {
+            document.getElementById('enough-box').style.display = 'block';
+        }
+
+        // إجابة سؤال "كفاية؟"
+        function answerEnough(choice) {
+            if (choice === 'yes') {
+                showAlert("بتهزري طبعا لا! 😜");
+            } else {
+                showAlert("الأغنية دي مني ليكي 🎵", () => {
+                    showPage('final-page');
+                });
+            }
+        }
+
+        // التحكم في الكاست وتشغيل الصوت
+        function toggleAudio() {
+            const audio = document.getElementById('my-song');
+            const reelsBox = document.getElementById('reels-box');
+
+            if (audio.paused) {
+                audio.play();
+                reelsBox.classList.add('spinning');
+            } else {
+                audio.pause();
+                reelsBox.classList.remove('spinning');
+            }
+        }
+    </script>
+</body>
+</html>
